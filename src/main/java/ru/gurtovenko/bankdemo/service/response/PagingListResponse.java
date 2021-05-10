@@ -1,9 +1,11 @@
 package ru.gurtovenko.bankdemo.service.response;
 
+import java.util.List;
+
 public class PagingListResponse<T> {
     private Long offset;
     private Long totalLength;
-    private T data;
+    private List<T> data;
 
     public Long getOffset() {
         return offset;
@@ -21,11 +23,11 @@ public class PagingListResponse<T> {
         this.totalLength = totalLength;
     }
 
-    public T getData() {
+    public List<T> getData() {
         return data;
     }
 
-    public void setData(T data) {
+    public void setData(List<T> data) {
         this.data = data;
     }
 }

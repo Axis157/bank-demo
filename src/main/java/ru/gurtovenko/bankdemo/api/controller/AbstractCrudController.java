@@ -16,19 +16,20 @@ import ru.gurtovenko.bankdemo.util.OLPageRequest;
 import ru.gurtovenko.bankdemo.util.SortParser;
 import ru.gurtovenko.bankdemo.util.SpecificationUtil;
 
+import java.io.Serializable;
+import java.lang.reflect.ParameterizedType;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class AbstractCrudController<T, ID, R extends BasicRepository<T, ID>> {
+public class AbstractCrudController<T, ID extends Serializable, R extends BasicRepository<T, ID>> {
     private final static Logger logger = LogManager.getLogger(AbstractCrudController.class);
 
     protected final Class<T> entityClass;
     protected final R repository;
 
     @Autowired
-    public AbstractCrudController(Class<T> entityClass,
-                                  R repository) {
-        this.entityClass = entityClass;
+    public AbstractCrudController(R repository) {
+        entityClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
         this.repository = repository;
     }
 

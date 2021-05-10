@@ -2,13 +2,12 @@ package ru.gurtovenko.bankdemo.util;
 
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
+import ru.gurtovenko.bankdemo.util.criteria.KeyOpValueCriteria;
+import ru.gurtovenko.bankdemo.util.criteria.KeyOpValueSpecification;
 import ru.gurtovenko.jwt.dto.payload.AccountInfo;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 
 public class SpecificationUtil {
@@ -79,46 +78,6 @@ public class SpecificationUtil {
      */
     public static <T> String convertValueAsLikeComparison(String value) {
         return "%" + value + "%";
-    }
-
-    /**
-     * Create quick filter specification
-     */
-    public static <T> Specification<T> createQuickFilterSpecification(String quickFilterValue, Class<T> entityClass) {
-        List<String> quickFilterSearchFields = AnnotationUtils.getQuickFilterSearchFields(entityClass);
-
-        Specification<T> result = null;
-
-        for (String quickFilterSearchField : quickFilterSearchFields) {
-            Specification<T> newSpec = createSpecification(quickFilterSearchField, "like", quickFilterValue);
-            result = result == null ? newSpec : Specification.where(result).or(newSpec);
-        }
-
-        return result;
-    }
-
-    /**
-     * Create provider filter specification
-     */
-    public static <T> Specification<T> createProviderFilterSpecification(Class<T> entityClass,
-                                                                         ProviderInfo providerInfo,
-                                                                         List<Role> roles) {
-
-        Specification<T> specification = null;
-
-        List<Field> fields = ReflectionUtils.getDeclaredFields(entityClass);
-
-        String adminProviderId = String.valueOf(providerInfo.getId());
-
-        for (Field field : fields) {
-            String fieldName = AnnotationUtils.getFieldNameForFilterSpecific(field, roles);
-
-            if (fieldName != null) {
-                specification = createSpecification(fieldName, "=", adminProviderId);
-            }
-        }
-
-        return specification;
     }
 
     /**
