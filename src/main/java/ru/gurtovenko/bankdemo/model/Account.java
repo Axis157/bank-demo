@@ -1,6 +1,5 @@
 package ru.gurtovenko.bankdemo.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import ru.gurtovenko.bankdemo.model.role.ERole;
 
 import javax.persistence.CollectionTable;
@@ -15,7 +14,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import java.util.Collections;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
