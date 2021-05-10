@@ -1,0 +1,19 @@
+application:
+  jwt:
+    accesstokensecret: 'verysecretkey'
+    accesstoken-expiration: 24
+    refreshtokensecret: 'verysecretrefreshkey'
+    refreshtoken-expiration: 3
+
+spring:
+  jpa:
+    database: POSTGRESQL
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
+  datasource:
+    platform: postgres
+    url: jdbc:postgresql://localhost:5432/bank-demo
+    username: postgres
+    password: postgres
+    driverClassName: org.postgresql.Driver
