@@ -41,8 +41,8 @@ public class WebSecurityConfig {
                 .pathMatchers( "/login", "/logout", "/registration/**")
                 .permitAll()
 
-                .anyExchange()
-                .authenticated()
+                .pathMatchers("/account")
+                .hasAnyAuthority(ERole.ROLE_ADMIN.name(), ERole.ROLE_CLIENT.name())
 
                 .and()
                 .build();

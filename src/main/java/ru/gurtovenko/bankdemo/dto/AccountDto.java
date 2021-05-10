@@ -1,46 +1,19 @@
-package ru.gurtovenko.bankdemo.model;
+package ru.gurtovenko.bankdemo.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import ru.gurtovenko.bankdemo.model.role.ERole;
+import ru.gurtovenko.bankdemo.model.Bill;
 
-import javax.persistence.CollectionTable;
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import java.util.Collections;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
-@Entity
-public class Account {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class AccountDto implements EntityDto{
     private Long id;
-    @OneToMany(mappedBy = "account", fetch = FetchType.EAGER)
     private Set<Bill> bills;
-    @Column(nullable = false)
     private String firstName;
     private String lastName;
     private String address;
-    @Column(unique = true, nullable = false)
     private String username;
-    @Column(nullable = false)
-    private String password;
-    @Enumerated(EnumType.STRING)
-    @ElementCollection(targetClass = ERole.class, fetch = FetchType.EAGER)
-    @CollectionTable(name = "account_role")
-    private Set<ERole> roles = Collections.singleton(ERole.ROLE_CLIENT);
 
-    public Account() {
+    public AccountDto() {
     }
 
     public Long getId() {
@@ -91,27 +64,11 @@ public class Account {
         this.username = username;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public Set<ERole> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<ERole> roles) {
-        this.roles = roles;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Account account = (Account) o;
+        AccountDto account = (AccountDto) o;
         return id.equals(account.id);
     }
 
@@ -129,8 +86,6 @@ public class Account {
                 ", lastName='" + lastName + '\'' +
                 ", address='" + address + '\'' +
                 ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", roles=" + roles +
                 '}';
     }
 }
